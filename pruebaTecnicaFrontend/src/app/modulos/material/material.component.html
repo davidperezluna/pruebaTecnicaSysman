@@ -1,0 +1,100 @@
+<mat-card appearance="outlined">
+  <mat-card-content>Filtros</mat-card-content>
+  <div class="example-container">
+    <form [formGroup]="searchForm" (ngSubmit)="filtrar()">
+      <mat-form-field>
+        <mat-label>Ciudad</mat-label>
+        <mat-select formControlName="idCiudad">
+          @for (ciudad of ciudades; track ciudad) {
+            <mat-option [value]="ciudad.id">{{ciudad.nombre}}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field> 
+      <mat-form-field>
+        <mat-label>Tipo</mat-label>
+        <input matInput formControlName="tipo">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Fecha de Compra</mat-label>
+        <input matInput [matDatepicker]="pickerCompra" formControlName="fechaCompra">
+        <mat-datepicker-toggle matSuffix [for]="pickerCompra"></mat-datepicker-toggle>
+        <mat-datepicker #pickerCompra></mat-datepicker>
+    </mat-form-field>
+    </form>
+  </div>
+  <mat-card-content>
+    <section>
+      <div class="example-label">Acciones</div>
+      <div class="example-button-row">
+        <button mat-raised-button color="primary" (click)="filtrar()" type="submit" class="ok-button">
+            <mat-icon>search</mat-icon> Filtrar
+        </button>
+        <button mat-raised-button color="default" (click)="limpiar()" type="submit" class="ok-button">
+            <mat-icon>search</mat-icon> Limpiar
+        </button>
+      </div>
+    </section>
+</mat-card-content>
+</mat-card>
+<br>
+<div class="container">
+<div class="pad">
+  <button mat-raised-button color="primary" (click)="openDialog()" class="ok-button">
+      <mat-icon>add</mat-icon> Crear
+  </button>
+</div>
+<mat-card appearance="outlined">
+  <mat-card-content>Proyectos</mat-card-content>
+  <mat-table [dataSource]="materiales" class="mat-elevation-z8">
+    <!-- id Column -->
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+    </ng-container>
+  
+    <!-- Nombre Column -->
+    <ng-container matColumnDef="nombre">
+      <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
+    </ng-container>
+  
+    <!-- tipo Column -->
+    <ng-container matColumnDef="tipo">
+      <mat-header-cell *matHeaderCellDef> Tipo </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.tipo}} </mat-cell>
+    </ng-container>
+  
+    <!-- fechaCompra Column -->
+    <ng-container matColumnDef="fechaCompra">
+      <mat-header-cell *matHeaderCellDef> Fecha Compra </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.fechaCompra}} </mat-cell>
+    </ng-container>
+
+    <!-- fechaVenta Column -->
+    <ng-container matColumnDef="fechaVenta">
+      <mat-header-cell *matHeaderCellDef> Fecha Venta </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.fechaVenta}} </mat-cell>
+    </ng-container>
+
+    <!-- Ciudad Column -->
+    <ng-container matColumnDef="ciudad">
+      <mat-header-cell *matHeaderCellDef> Ciudad </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.ciudad.nombre}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+          <button mat-icon-button color="primary" (click)="openDialog(element)">
+          <mat-icon>edit</mat-icon>
+          </button>
+      </mat-cell>
+    </ng-container>
+  
+   
+  
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</mat-card>
+</div>
